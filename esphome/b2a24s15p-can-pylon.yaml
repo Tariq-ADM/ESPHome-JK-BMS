@@ -1,0 +1,143 @@
+# Draft. Not flashed on a B2A24S15P-CAN.
+#
+# Use this only when the BMS CAN profile is broadcasting a Pylon-style
+# low-voltage battery message set at 500 kbit/s. Many JK CAN options do that
+# for Deye, Growatt, GoodWe and Victron. It is a different map from
+# b2a24s15p-can.yaml, and the current sign is the opposite: positive is charge.
+#
+# Same transceiver wiring as docs/figures/can-wiring.svg.
+# This map does not include the 24 individual cell voltages.
+
+substitutions:
+  name: b2a24s15p-can-pylon
+  tx_pin: GPIO5
+  rx_pin: GPIO4
+
+esphome:
+  name: ${name}
+  friendly_name: B2A24S15P CAN Pylon
+  min_version: "2026.1.0"
+  comment: "Draft listener for a Pylon-style broadcast on the CAN port"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+logger:
+  level: INFO
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+sensor:
+  - platform: template
+    name: Charge voltage limit
+    id: charge_voltage
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    device_class: voltage
+    state_class: measurement
+  - platform: template
+    name: Charge current limit
+    id: charge_current_limit
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    device_class: current
+    state_class: measurement
+  - platform: template
+    name: Discharge current limit
+    id: discharge_current_limit
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    device_class: current
+    state_class: measurement
+  - platform: template
+    name: Discharge voltage limit
+    id: discharge_voltage
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    device_class: voltage
+    state_class: measurement
+  - platform: template
+    name: State of charge
+    id: state_of_charge
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    device_class: battery
+    state_class: measurement
+  - platform: template
+    name: State of health
+    id: state_of_health
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+  - platform: template
+    name: Pack voltage
+    id: pack_voltage
+    unit_of_measurement: V
+    accuracy_decimals: 2
+    device_class: voltage
+    state_class: measurement
+  - platform: template
+    name: Pack current
+    id: pack_current
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    device_class: current
+    state_class: measurement
+  - platform: template
+    name: Pack temperature
+    id: pack_temperature
+    unit_of_measurement: °C
+    accuracy_decimals: 1
+    device_class: temperature
+    state_class: measurement
+
+canbus:
+  - platform: esp32_can
+    id: bms_can
+    tx_pin: ${tx_pin}
+    rx_pin: ${rx_pin}
+    bit_rate: 500KBPS
+    can_id: 0x700
+    on_frame:
+      - can_id: 0x351
+        then:
+          - lambda: |-
+              if (x.size() < 8) return;
+              id(charge_voltage).publish_state(((uint16_t) x[0] | ((uint16_t) x[1] << 8)) * 0.1f);
+              id(charge_current_limit).publish_state(((uint16_t) x[2] | ((uint16_t) x[3] << 8)) * 0.1f);
+              id(discharge_current_limit).publish_state(((uint16_t) x[4] | ((uint16_t) x[5] << 8)) * 0.1f);
+              id(discharge_voltage).publish_state(((uint16_t) x[6] | ((uint16_t) x[7] << 8)) * 0.1f);
+      - can_id: 0x355
+        then:
+          - lambda: |-
+              if (x.size() < 4) return;
+              id(state_of_charge).publish_state((uint16_t) x[0] | ((uint16_t) x[1] << 8));
+              id(state_of_health).publish_state((uint16_t) x[2] | ((uint16_t) x[3] << 8));
+      - can_id: 0x356
+        then:
+          - lambda: |-
+              if (x.size() < 6) return;
+              uint16_t raw_v = (uint16_t) x[0] | ((uint16_t) x[1] << 8);
+              int16_t s16_i = (int16_t) ((uint16_t) x[2] | ((uint16_t) x[3] << 8));
+              int16_t s16_t = (int16_t) ((uint16_t) x[4] | ((uint16_t) x[5] << 8));
+              id(pack_voltage).publish_state(raw_v * 0.01f);
+              id(pack_current).publish_state(s16_i * 0.1f);
+              id(pack_temperature).publish_state(s16_t * 0.1f);
+      - can_id: 0x000
+        can_id_mask: 0x000
+        then:
+          - lambda: |-
+              if (can_id == 0x351 || can_id == 0x355 || can_id == 0x356 || can_id == 0x359 || can_id == 0x35C)
+                return;
+              ESP_LOGW("jk_can", "other id=0x%03X dlc=%u", can_id, x.size());

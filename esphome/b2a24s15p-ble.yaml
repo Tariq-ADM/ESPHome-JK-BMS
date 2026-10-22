@@ -1,0 +1,147 @@
+# Draft. Not flashed on a B2A24S15P-CAN.
+#
+# Reads the pack over Bluetooth. No cable, and VGPS stays untouched.
+# JK02_24S matches the B2A24S15P reports at hardware 6.x, 8.x and 10.x.
+# Change the substitution to JK02_32S if the sticker says hardware 11 or newer.
+# The MAC is in secrets.yaml. This draft only publishes measurements.
+
+substitutions:
+  name: b2a24s15p-ble
+  protocol_version: JK02_24S
+
+esphome:
+  name: ${name}
+  friendly_name: B2A24S15P BLE
+  min_version: "2026.1.0"
+  comment: "Draft BLE reader for JK-B2A24S15P"
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+logger:
+  level: INFO
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+external_components:
+  - source: github://syssi/esphome-jk-bms@main
+    refresh: 1d
+
+esp32_ble_tracker:
+  scan_parameters:
+    active: false
+
+ble_client:
+  - mac_address: !secret bms0_mac_address
+    id: client0
+
+jk_bms_ble:
+  - ble_client_id: client0
+    protocol_version: ${protocol_version}
+    throttle: 5s
+    id: bms0
+
+binary_sensor:
+  - platform: jk_bms_ble
+    balancing:
+      name: Balancing
+    charging:
+      name: Charging
+    discharging:
+      name: Discharging
+    online_status:
+      name: Online
+
+sensor:
+  - platform: jk_bms_ble
+    jk_bms_ble_id: bms0
+    total_voltage:
+      name: Pack voltage
+    current:
+      name: Pack current
+    power:
+      name: Pack power
+    state_of_charge:
+      name: State of charge
+    capacity_remaining:
+      name: Capacity remaining
+    min_cell_voltage:
+      name: Min cell voltage
+    max_cell_voltage:
+      name: Max cell voltage
+    delta_cell_voltage:
+      name: Cell delta
+    average_cell_voltage:
+      name: Average cell voltage
+    min_voltage_cell:
+      name: Min cell
+    max_voltage_cell:
+      name: Max cell
+    mosfet_temperature:
+      name: MOSFET temperature
+    temperature_sensor_1:
+      name: Temperature 1
+    temperature_sensor_2:
+      name: Temperature 2
+    errors_bitmask:
+      name: Error bitmask
+    cell_voltage_1:
+      name: "Cell 1 voltage"
+    cell_voltage_2:
+      name: "Cell 2 voltage"
+    cell_voltage_3:
+      name: "Cell 3 voltage"
+    cell_voltage_4:
+      name: "Cell 4 voltage"
+    cell_voltage_5:
+      name: "Cell 5 voltage"
+    cell_voltage_6:
+      name: "Cell 6 voltage"
+    cell_voltage_7:
+      name: "Cell 7 voltage"
+    cell_voltage_8:
+      name: "Cell 8 voltage"
+    cell_voltage_9:
+      name: "Cell 9 voltage"
+    cell_voltage_10:
+      name: "Cell 10 voltage"
+    cell_voltage_11:
+      name: "Cell 11 voltage"
+    cell_voltage_12:
+      name: "Cell 12 voltage"
+    cell_voltage_13:
+      name: "Cell 13 voltage"
+    cell_voltage_14:
+      name: "Cell 14 voltage"
+    cell_voltage_15:
+      name: "Cell 15 voltage"
+    cell_voltage_16:
+      name: "Cell 16 voltage"
+    cell_voltage_17:
+      name: "Cell 17 voltage"
+    cell_voltage_18:
+      name: "Cell 18 voltage"
+    cell_voltage_19:
+      name: "Cell 19 voltage"
+    cell_voltage_20:
+      name: "Cell 20 voltage"
+    cell_voltage_21:
+      name: "Cell 21 voltage"
+    cell_voltage_22:
+      name: "Cell 22 voltage"
+    cell_voltage_23:
+      name: "Cell 23 voltage"
+    cell_voltage_24:
+      name: "Cell 24 voltage"

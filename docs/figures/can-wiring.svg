@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="780" viewBox="0 0 1100 780">
+  <rect width="1100" height="780" fill="#f4f1ea"/>
+  <text x="36" y="40" font-family="Georgia, serif" font-size="26" fill="#1c1917">CAN wiring, common B2A header</text>
+  <text x="36" y="66" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#57534e">JK-B2AxxS-15P-20P as published by JKBMS. Confirm the silkscreen before wiring.</text>
+
+  <g font-family="ui-sans-serif, sans-serif" font-size="14" fill="#1c1917">
+    <rect x="36" y="96" width="300" height="430" rx="12" fill="#fff" stroke="#1c1917"/>
+    <text x="52" y="126" font-size="16" font-weight="700">P9 communication, 4 pin</text>
+    <text x="52" y="148" font-size="13" fill="#57534e">A1254WF-4A, 1.25 mm</text>
+
+    <g id="p9">
+      <circle cx="78" cy="190" r="9" fill="#0f766e"/>
+      <text x="100" y="195">1  CAN_L</text>
+      <circle cx="78" cy="230" r="9" fill="#c2410c"/>
+      <text x="100" y="235">2  CAN_H</text>
+      <circle cx="78" cy="270" r="9" fill="#a8a29e"/>
+      <text x="100" y="275">3  RS485_A  leave open</text>
+      <circle cx="78" cy="310" r="9" fill="#a8a29e"/>
+      <text x="100" y="315">4  RS485_B  leave open</text>
+    </g>
+
+    <text x="52" y="360" font-size="16" font-weight="700">P8 UART, ground only</text>
+    <circle cx="78" cy="396" r="9" fill="#1c1917"/>
+    <text x="100" y="401">1  GND  connect</text>
+    <circle cx="78" cy="436" r="9" fill="#fff" stroke="#9f1239" stroke-width="2"/>
+    <text x="100" y="441" fill="#9f1239">2  RX  not used here</text>
+    <circle cx="78" cy="476" r="9" fill="#fff" stroke="#9f1239" stroke-width="2"/>
+    <text x="100" y="481" fill="#9f1239">3  TX  not used here</text>
+    <circle cx="78" cy="503" r="9" fill="#fff" stroke="#9f1239" stroke-width="2"/>
+    <text x="100" y="508" fill="#9f1239" font-weight="700">4  VGPS  do not connect</text>
+
+    <rect x="400" y="96" width="280" height="430" rx="12" fill="#fff" stroke="#1c1917"/>
+    <text x="416" y="126" font-size="16" font-weight="700">SN65HVD230 module</text>
+    <text x="416" y="148" font-size="13" fill="#57534e">RS tied to GND, high-speed</text>
+    <text x="416" y="190">CANL  from P9 pin 1</text>
+    <text x="416" y="222">CANH  from P9 pin 2</text>
+    <text x="416" y="262">VCC   ESP32 3V3</text>
+    <text x="416" y="294">GND   P8 pin 1 and ESP GND</text>
+    <text x="416" y="334" fill="#1d4ed8">CTX   ESP32 GPIO5</text>
+    <text x="416" y="366" fill="#b45309">CRX   ESP32 GPIO4</text>
+    <text x="416" y="406">RS    module GND</text>
+    <text x="416" y="454" font-size="13" fill="#57534e">120 ohm across CANH/CANL</text>
+    <text x="416" y="476" font-size="13" fill="#57534e">only when the BMS end has</text>
+    <text x="416" y="498" font-size="13" fill="#57534e">no termination of its own.</text>
+
+    <rect x="744" y="96" width="320" height="430" rx="12" fill="#fff" stroke="#1c1917"/>
+    <text x="760" y="126" font-size="16" font-weight="700">ESP32 DevKit</text>
+    <text x="760" y="148" font-size="13" fill="#57534e">esp32dev, not S2 or C3</text>
+    <text x="760" y="190" fill="#1d4ed8">GPIO5   TWAI TX  to CTX</text>
+    <text x="760" y="222" fill="#b45309">GPIO4   TWAI RX  from CRX</text>
+    <text x="760" y="262">3V3     transceiver VCC</text>
+    <text x="760" y="294">GND     transceiver and P8.1</text>
+    <text x="760" y="334">5V      USB connector only</text>
+    <text x="760" y="390" font-size="13" fill="#57534e">Avoid GPIO 6-11. Those pins</text>
+    <text x="760" y="412" font-size="13" fill="#57534e">are the flash bus.</text>
+    <text x="760" y="450" font-size="13" fill="#57534e">Draft bitrate 250 kbit/s.</text>
+    <text x="760" y="472" font-size="13" fill="#57534e">Inverter profiles use 500.</text>
+
+    <path d="M336 190 H400" stroke="#0f766e" stroke-width="2" fill="none"/>
+    <path d="M336 230 H400" stroke="#c2410c" stroke-width="2" fill="none"/>
+    <path d="M336 396 H368 V294 H400" stroke="#1c1917" stroke-width="2" fill="none"/>
+    <path d="M680 334 C 712 334, 712 190, 744 190" stroke="#1d4ed8" stroke-width="2" fill="none"/>
+    <path d="M680 366 C 714 366, 714 222, 744 222" stroke="#b45309" stroke-width="2" fill="none"/>
+  </g>
+
+  <rect x="36" y="550" width="1028" height="196" rx="12" fill="#fff7ed" stroke="#9a3412"/>
+  <text x="56" y="582" font-family="ui-sans-serif, sans-serif" font-size="16" font-weight="700" fill="#9a3412">Before power</text>
+  <text x="56" y="612" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#1c1917">VGPS sits near pack positive. On 24S that is roughly 70 to 100 V. It destroys a 3.3 V pin.</text>
+  <text x="56" y="638" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#1c1917">Some B2A24S15P boards use a 3-pin NSH CAN plug. This drawing does not cover that plug.</text>
+  <text x="56" y="664" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#1c1917">A reversed 4-pin board puts CAN on pins 3 and 4. JK-BD6A8S-10P is one of those. This model family is not.</text>
+  <text x="56" y="690" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#1c1917">Share one ground. Do not tie CAN_H or CAN_L to ground, 3V3, or the RS485 pair.</text>
+  <text x="56" y="722" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#57534e">TJA1050 modules are 5 V on the logic side. This draft uses the 3.3 V SN65HVD230 so GPIO4 and GPIO5 need no divider.</text>
+</svg>

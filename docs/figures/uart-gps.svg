@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="640" viewBox="0 0 1100 640">
+  <rect width="1100" height="640" fill="#f4f1ea"/>
+  <text x="36" y="40" font-family="Georgia, serif" font-size="26" fill="#1c1917">UART wiring for all 24 cells</text>
+  <text x="36" y="66" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#57534e">GPS socket on the common JK-B2AxxS-15P header. 115200 baud, 8N1, 3.3 V.</text>
+
+  <g font-family="ui-sans-serif, sans-serif" font-size="15" fill="#1c1917">
+    <rect x="36" y="100" width="360" height="360" rx="12" fill="#fff" stroke="#1c1917"/>
+    <text x="56" y="132" font-size="16" font-weight="700">P8, 1.25 mm, 4 pin</text>
+    <text x="56" y="156" font-size="13" fill="#57534e">Looking at the plug, pin 1 at the latch end</text>
+
+    <circle cx="78" cy="200" r="10" fill="#1c1917"/>
+    <text x="104" y="206">1  GND</text>
+    <text x="230" y="206" fill="#57534e">signal ground</text>
+
+    <circle cx="78" cy="252" r="10" fill="#b45309"/>
+    <text x="104" y="258">2  BMS RX</text>
+    <text x="230" y="258" fill="#57534e">3.3 V input</text>
+
+    <circle cx="78" cy="304" r="10" fill="#1d4ed8"/>
+    <text x="104" y="310">3  BMS TX</text>
+    <text x="230" y="310" fill="#57534e">3.3 V output</text>
+
+    <circle cx="78" cy="368" r="10" fill="#fff" stroke="#9f1239" stroke-width="2"/>
+    <text x="104" y="374" fill="#9f1239" font-weight="700">4  VGPS</text>
+    <text x="230" y="374" fill="#9f1239">pack voltage</text>
+    <text x="56" y="420" fill="#9f1239">Leave pin 4 open. No resistor makes it safe.</text>
+
+    <rect x="560" y="100" width="500" height="360" rx="12" fill="#fff" stroke="#1c1917"/>
+    <text x="584" y="132" font-size="16" font-weight="700">ESP32 DevKit</text>
+    <text x="584" y="156" font-size="13" fill="#57534e">esphome/b2a24s15p-uart.yaml</text>
+
+    <text x="584" y="210">GPIO16  TX</text>
+    <text x="760" y="210" fill="#b45309">to BMS pin 2, RX</text>
+
+    <text x="584" y="262">GPIO17  RX</text>
+    <text x="760" y="262" fill="#1d4ed8">from BMS pin 3, TX</text>
+
+    <text x="584" y="314">GND</text>
+    <text x="760" y="314">to BMS pin 1</text>
+
+    <text x="584" y="380" font-size="14" fill="#57534e">GPIO1 and GPIO3 stay on the USB console.</text>
+    <text x="584" y="406" font-size="14" fill="#57534e">Power the board from USB, not from the pack.</text>
+
+    <path d="M396 252 C 480 252, 480 210, 560 210" stroke="#b45309" stroke-width="2.5" fill="none"/>
+    <path d="M396 304 C 470 304, 490 262, 560 262" stroke="#1d4ed8" stroke-width="2.5" fill="none"/>
+    <path d="M396 200 C 500 200, 500 314, 560 314" stroke="#1c1917" stroke-width="2.5" fill="none"/>
+  </g>
+
+  <rect x="36" y="488" width="1024" height="120" rx="12" fill="#fff7ed" stroke="#9a3412"/>
+  <text x="56" y="522" font-family="ui-sans-serif, sans-serif" font-size="16" font-weight="700" fill="#9a3412">Cross the data pair</text>
+  <text x="56" y="552" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#1c1917">BMS TX drives ESP RX. BMS RX listens to ESP TX. A straight pin-to-pin cable stays silent.</text>
+  <text x="56" y="578" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#1c1917">On the BMS display, the GPS port protocol has to be the UART data mode. A GPS-modem profile sends the wrong bytes.</text>
+</svg>

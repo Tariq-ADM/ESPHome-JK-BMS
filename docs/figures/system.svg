@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="420" viewBox="0 0 1100 420">
+  <rect width="1100" height="420" fill="#f4f1ea"/>
+  <text x="40" y="42" font-family="Georgia, serif" font-size="26" fill="#1c1917">B2A24S15P-CAN read into ESPHome</text>
+  <text x="40" y="68" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#57534e">Listen-only path. The ESP does not drive the pack contactors.</text>
+
+  <g font-family="ui-sans-serif, sans-serif">
+    <rect x="36" y="110" width="210" height="200" rx="12" fill="#fff" stroke="#1c1917" stroke-width="1.5"/>
+    <text x="52" y="142" font-size="16" font-weight="700" fill="#1c1917">JK-B2A24S15P</text>
+    <text x="52" y="164" font-size="13" fill="#57534e">CAN option fitted</text>
+    <text x="52" y="198" font-size="14" fill="#1c1917">P9 pin 2  CAN_H</text>
+    <text x="52" y="220" font-size="14" fill="#1c1917">P9 pin 1  CAN_L</text>
+    <text x="52" y="250" font-size="14" fill="#1c1917">P8 pin 1  GND</text>
+    <text x="52" y="278" font-size="13" fill="#9f1239">P8 pin 4  VGPS open</text>
+
+    <rect x="330" y="110" width="210" height="200" rx="12" fill="#fff" stroke="#1c1917" stroke-width="1.5"/>
+    <text x="346" y="142" font-size="16" font-weight="700" fill="#1c1917">SN65HVD230</text>
+    <text x="346" y="164" font-size="13" fill="#57534e">3.3 V CAN transceiver</text>
+    <text x="346" y="198" font-size="14" fill="#c2410c">CANH</text>
+    <text x="346" y="220" font-size="14" fill="#0f766e">CANL</text>
+    <text x="346" y="250" font-size="14" fill="#1d4ed8">CTX  from GPIO5</text>
+    <text x="346" y="272" font-size="14" fill="#b45309">CRX  to GPIO4</text>
+
+    <rect x="624" y="110" width="200" height="200" rx="12" fill="#fff" stroke="#1c1917" stroke-width="1.5"/>
+    <text x="640" y="142" font-size="16" font-weight="700" fill="#1c1917">ESP32 DevKit</text>
+    <text x="640" y="164" font-size="13" fill="#57534e">Classic ESP32, TWAI</text>
+    <text x="640" y="198" font-size="14" fill="#1c1917">GPIO5  TX</text>
+    <text x="640" y="220" font-size="14" fill="#1c1917">GPIO4  RX</text>
+    <text x="640" y="250" font-size="14" fill="#1c1917">3V3 and GND</text>
+    <text x="640" y="278" font-size="13" fill="#57534e">USB power only</text>
+
+    <rect x="890" y="110" width="170" height="200" rx="12" fill="#1c1917"/>
+    <text x="906" y="150" font-size="16" font-weight="700" fill="#f4f1ea">Home</text>
+    <text x="906" y="172" font-size="16" font-weight="700" fill="#f4f1ea">Assistant</text>
+    <text x="906" y="210" font-size="14" fill="#d6d3d1">ESPHome API</text>
+    <text x="906" y="234" font-size="14" fill="#d6d3d1">over Wi-Fi</text>
+
+    <line x1="246" y1="198" x2="330" y2="198" stroke="#c2410c" stroke-width="2"/>
+    <line x1="246" y1="220" x2="330" y2="220" stroke="#0f766e" stroke-width="2"/>
+    <line x1="540" y1="250" x2="624" y2="198" stroke="#1d4ed8" stroke-width="2"/>
+    <line x1="540" y1="272" x2="624" y2="220" stroke="#b45309" stroke-width="2"/>
+    <line x1="824" y1="210" x2="890" y2="210" stroke="#1c1917" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="832" y="198" font-size="12" fill="#1c1917">Wi-Fi</text>
+  </g>
+
+  <text x="40" y="360" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#1c1917">CAN gives pack voltage, current, SOC, min/max cell and temperatures.</text>
+  <text x="40" y="384" font-family="ui-sans-serif, sans-serif" font-size="14" fill="#1c1917">All 24 cell voltages come from the UART or BLE draft, not from these CAN frames.</text>
+</svg>
